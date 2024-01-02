@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Editor</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        height: 100vh;
+      }
+  
+      #editor-container {
+        display: flex;
+        position: relative;
+        flex: 1;
+        height: 100%;
+        overflow: hidden;
+        background-color: green;
+      }
+  
+      /* #line-numbers {
+        margin-right:2px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 30px;
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        background-color: #b4aeae;
+        font-family: 'Courier New', monospace;
+        font-size: 16px;
+        user-select: none;
+      } */
+
+      #line-numbers{
+        background-color: #353535;
+        width: 1rem;
+        color: wheat;
+        /* width: fit-content; */
+      }
+  
+      #code-input {
+        /* margin-left: 30px; Adjust the margin to align with line numbers */
+        width: calc(100%);
+        height: 100%;
+        border: none;
+        outline: none;
+        font-family: 'Courier New', monospace;
+        font-size: 16px;
+        color: #f4f4f4;
+        background-color: #353535;
+      }
+  
+      #output-container {
+        flex: 1;
+        height: 100%;
+        overflow: auto; /* Added overflow property for scrollbars */
+        padding: 20px;
+        box-sizing: border-box;
+        background-color: #f4f4f4;
+        resize: both; /* Added resize property for both horizontal and vertical resizing */
+        overflow: auto; /* Added overflow property for scrollbars */
+      }
+      .output{
+        resize: vertical;
+        background-color: aqua;
+      }
+      .textarea-output{
+        resize: none;
+        width: 45vw;
+        height: 100vh;
+        /* border: solid 1px; */
+        outline: none;
+        color: azure;
+        background-color: #353535;
+      }
+      .line{
+        cursor: ew-resize;
+        width: 2px;
+        background-color:whitesmoke;
+      }
+  </style>
+</head>
+<body>
+  <div class="output">
+    <textarea name="" id="output1" class="textarea-output p-4 " placeholder="Write your Output get"></textarea>
+    <!-- <textarea name="" id="output2" class="block textarea-output p-4 " placeholder="Write your algorithm"></textarea> -->
+  </div>
+  <div class="line"></div>
+  
+  <div id="editor-container">
+    <div id="line-numbers"></div>
+    <textarea id="code-input" placeholder="Type your code here..."></textarea>
+  </div>
+  <!-- <div id="output-container">
+    <h2>Output</h2>
+    <div id="output"></div>
+  </div> -->
+
+  <script>
+    const codeInput = document.getElementById('code-input');
+    const lineNumbers = document.getElementById('line-numbers');
+    const outputContainer = document.getElementById('output-container');
+    const output1 = document.getElementById('output1');
+    const output2 = document.
+getElementById('output2');
+
+codeInput.addEventListener('input', updateLineNumbers);
+
+function updateLineNumbers() {
+  const lines = codeInput.value.split('\n');
+  const lineNumbersHTML = lines.map((_, index) => `<div>${index + 1}</div>`).join('');
+  lineNumbers.innerHTML = lineNumbersHTML;
+}
+
+// Add event listener for resizing the textareas
+const line = document.querySelector('.line');
+const leftTextarea = output1; // Assuming you want to resize output1
+const rightTextarea = output2; // Assuming you want to resize output2
+
+let isResizing = false;
+
+line.addEventListener('mousedown', (event) => {
+  isResizing = true;
+  document.addEventListener('mousemove', handleMouseMove);
+  document.addEventListener('mouseup', () => {
+    isResizing = false;
+    document.removeEventListener('mousemove', handleMouseMove);
+  });
+});
+
+function handleMouseMove(event) {
+  if (isResizing) {
+    const newWidth = event.clientX - leftTextarea.getBoundingClientRect().left;
+    leftTextarea.style.width = `${newWidth}px`;
+    rightTextarea.style.width = `calc(100% - ${newWidth}px)`;
+  }
+}
+</script>
+</body>
+</html>
+
+

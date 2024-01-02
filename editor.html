@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Editor</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+    }
+
+    #editor-container {
+      position: relative;
+      flex: 1;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* #line-numbers {
+      margin-right:2px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 30px;
+      height: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+      background-color: #b4aeae;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      user-select: none;
+    } */
+
+    #code-input {
+      margin-left: 30px; /* Adjust the margin to align with line numbers */
+      width: calc(100% - 30px);
+      height: 100%;
+      border: none;
+      outline: none;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      color: #f4f4f4;
+      background-color: #353535;
+    }
+
+    #output-container {
+      flex: 1;
+      height: 100%;
+      overflow: auto; /* Added overflow property for scrollbars */
+      padding: 20px;
+      box-sizing: border-box;
+      background-color: #f4f4f4;
+      resize: both; /* Added resize property for both horizontal and vertical resizing */
+      overflow: auto; /* Added overflow property for scrollbars */
+    }
+    .output{
+      resize: vertical;
+      background-color: aqua;
+    }
+    .textarea-output{
+      resize: horizontal;
+      width: 45vw;
+      height: 50vh;
+      border: solid 1px;
+      outline: none;
+    }
+    .line{
+      cursor: ew-resize;
+      width: 1rem;
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="output">
+    <textarea name="" id="" class="textarea-output p-4" placeholder="Write your Output get"></textarea>
+    <textarea name="" id="" class="block textarea-output p-4 " placeholder="Write your algorithm"></textarea>
+  </div>
+  <div class="line"></div>
+  <div id="line-numbers"></div>
+  <div id="editor-container">
+    <textarea id="code-input"  placeholder="Type your code here..."></textarea>
+  </div>
+  <!-- <div id="output-container">
+    <h2>Output</h2>
+    <div id="output"></div>
+  </div> -->
+
+  <script>
+    const codeInput = document.getElementById('code-input');
+    const lineNumbers = document.getElementById('line-numbers');
+    const outputContainer = document.getElementById('output-container');
+
+    codeInput.addEventListener('input', updateLineNumbers);
+
+    function updateLineNumbers() {
+      const lines = codeInput.value.split('\n');
+      const lineNumbersHTML = lines.map((_, index) => `<div>${index + 1}</div>`).join('');
+      lineNumbers.innerHTML = lineNumbersHTML;
+    }
+  </script>
+   
+</body>
+</html>
+
+
